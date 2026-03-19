@@ -1,422 +1,947 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SoftGrid · Premium Software Hub</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoftHaven · download hub</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Font: Inter clean modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <style>
-    /* ──────────────────────────────────────────────
-       Your original beautiful glassmorphism CSS
-       (kept almost identical — only minor tweaks)
-    ────────────────────────────────────────────── */
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-    :root{--bg:#f4f7fb;--surface:rgba(255,255,255,0.7);--surface-solid:#fff;--text:#1e293b;--text-light:#475569;--border:rgba(0,0,0,0.05);--card-bg:rgba(255,255,255,0.75);--card-shadow:0 15px 30px -12px rgba(0,0,0,0.15);--hover-shadow:0 25px 40px -12px rgba(0,85,255,0.25);--accent:#2563eb;--accent-glow:#3b82f6;--badge-featured:#f59e0b;--badge-new:#10b981;--glass-border:1px solid rgba(255,255,255,0.4);--nav-bg:rgba(255,255,255,0.6);--toast-bg:#1e293b;--toast-text:#fff;--icon-filter:none}
-    body.dark{--bg:#0b1120;--surface:rgba(15,23,42,0.7);--surface-solid:#1e293b;--text:#e2e8f0;--text-light:#94a3b8;--border:rgba(255,255,255,0.05);--card-bg:rgba(30,41,59,0.7);--card-shadow:0 15px 30px -12px rgba(0,0,0,0.6);--hover-shadow:0 25px 40px -12px #2563eb80;--accent:#3b82f6;--accent-glow:#60a5fa;--badge-featured:#fbbf24;--badge-new:#34d399;--glass-border:1px solid rgba(255,255,255,0.08);--nav-bg:rgba(15,23,42,0.8);--toast-bg:#1e293b;--toast-text:#f1f5f9;--icon-filter:brightness(0.9)}
-    body{background:var(--bg);color:var(--text);line-height:1.5;transition:background .3s,color .2s;min-height:100vh}
-    .glass-card,nav,.search-box,.filter-btn,.software-card,.featured-card,.modal-content,.toast{background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:var(--glass-border);border-radius:24px;box-shadow:var(--card-shadow)}
-    .container{max-width:1280px;margin:0 auto;padding:0 24px}
-    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;margin:20px 24px;position:sticky;top:20px;z-index:50;backdrop-filter:blur(14px);border-radius:60px;background:var(--nav-bg)}
-    .logo{font-weight:700;font-size:1.7rem;letter-spacing:-.5px;background:linear-gradient(135deg,var(--accent),#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .nav-links{display:flex;gap:28px;font-weight:500}
-    .nav-links a{text-decoration:none;color:var(--text);transition:.2s}
-    .nav-links a:hover{color:var(--accent)}
-    .theme-toggle{background:var(--surface);border:var(--glass-border);border-radius:40px;padding:8px 16px;cursor:pointer;display:flex;gap:8px;align-items:center;font-size:.9rem;font-weight:600;color:var(--text)}
-    .hero{text-align:center;margin:60px 0 40px}
-    .hero h1{font-size:3.2rem;font-weight:800;background:linear-gradient(to right,var(--accent),#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hero p{font-size:1.2rem;color:var(--text-light);margin:16px 0 28px}
-    .cta-btn{background:linear-gradient(145deg,var(--accent),#1e4fd0);border:none;color:#fff;font-weight:600;padding:14px 36px;border-radius:50px;font-size:1.2rem;cursor:pointer;box-shadow:0 8px 20px var(--accent-glow);transition:.2s}
-    .cta-btn:hover{transform:scale(1.02)}
-    .search-section{display:flex;flex-direction:column;gap:20px;margin:50px 0 30px}
-    .search-box{display:flex;align-items:center;padding:8px 20px;border-radius:60px;width:100%;max-width:500px;margin:0 auto}
-    .search-box i{color:var(--accent);font-size:1.2rem}
-    .search-box input{background:0 0;border:none;padding:14px 12px;width:100%;font-size:1rem;color:var(--text);outline:0}
-    .filter-group{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-    .filter-btn{padding:10px 24px;border:none;background:var(--surface);color:var(--text);font-weight:600;border-radius:40px;cursor:pointer;transition:.2s;backdrop-filter:blur(4px)}
-    .filter-btn.active{background:var(--accent);color:#fff;box-shadow:0 0 15px var(--accent)}
-    .section-title{font-size:2rem;font-weight:700;margin:50px 0 20px}
-    .featured-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-bottom:40px}
-    .featured-card{padding:24px;position:relative;transition:.25s;border-radius:28px}
-    .featured-card:hover{box-shadow:var(--hover-shadow);transform:translateY(-6px)}
-    .featured-badge{position:absolute;top:16px;right:20px;background:var(--badge-featured);color:#000;font-weight:700;padding:4px 14px;border-radius:40px;font-size:.75rem}
-    .software-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px;margin:30px 0 50px}
-    .software-card{padding:22px 18px 20px;border-radius:28px;transition:.25s;position:relative;display:flex;flex-direction:column}
-    .software-card:hover{box-shadow:var(--hover-shadow);transform:translateY(-5px)}
-    .card-header{display:flex;gap:16px;align-items:center;margin-bottom:14px}
-    .icon-placeholder{width:52px;height:52px;background:var(--surface-solid);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--accent);border:1px solid var(--border)}
-    .card-header h3{font-size:1.25rem;font-weight:700}
-    .category-tag{background:var(--accent);color:#fff;padding:4px 10px;border-radius:40px;font-size:.7rem;font-weight:600;display:inline-block;width:fit-content;margin:8px 0}
-    .meta-row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--text-light);margin:8px 0}
-    .download-count-small i{color:var(--accent);margin-right:4px}
-    .view-btn{background:0 0;border:1px solid var(--accent);color:var(--accent);font-weight:600;padding:10px 0;border-radius:40px;margin-top:14px;cursor:pointer;transition:.2s}
-    .view-btn:hover{background:var(--accent);color:#fff}
-    .new-badge{position:absolute;top:12px;left:20px;background:var(--badge-new);color:#000;font-size:.7rem;font-weight:700;padding:2px 12px;border-radius:40px}
-    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;z-index:200}
-    .modal-content{max-width:550px;width:90%;padding:30px;border-radius:40px;position:relative;animation:modalFade .2s}
-    @keyframes modalFade{from{opacity:0;transform:scale(.9)}to{opacity:1}}
-    .close-modal{position:absolute;top:18px;right:22px;font-size:1.8rem;cursor:pointer;color:var(--text-light)}
-    .modal-icon{font-size:3rem;color:var(--accent);background:var(--surface);width:80px;height:80px;border-radius:30px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
-    .dl-options{display:flex;flex-direction:column;gap:12px;margin:20px 0}
-    .dl-row{display:flex;gap:8px;align-items:center;background:var(--surface);padding:8px 16px;border-radius:60px}
-    .dl-row button,.copy-link-btn{background:var(--accent);border:none;color:#fff;padding:10px 20px;border-radius:40px;font-weight:600;cursor:pointer;transition:.2s;flex:1}
-    .copy-link-btn{background:var(--surface-solid);color:var(--text);flex:0;padding:10px 18px;border:1px solid var(--border)}
-    .dl-row button i,.copy-link-btn i{margin-right:6px}
-    .copy-link-btn:hover{background:var(--accent);color:#fff}
-    .toast{position:fixed;bottom:30px;right:30px;background:var(--toast-bg);color:var(--toast-text);padding:14px 28px;border-radius:60px;font-weight:500;box-shadow:0 10px 25px rgba(0,0,0,.3);display:flex;align-items:center;gap:12px;z-index:300;transition:.25s;border:1px solid rgba(255,255,255,.1)}
-    .toast.hide{opacity:0;visibility:hidden;bottom:20px}
-    footer{margin-top:80px;background:var(--surface);border-radius:50px 50px 0 0;padding:40px 24px 20px;text-align:center;border:var(--glass-border)}
-    .social-icons{display:flex;gap:24px;justify-content:center;margin:20px 0}
-    .social-icons a{color:var(--text);font-size:1.8rem;transition:.2s}
-    .social-icons a:hover{color:var(--accent);transform:scale(1.1)}
-    .copy-notice{font-size:.9rem;color:var(--text-light)}
-    .loader-wrapper{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .5s}
-    .loader{width:50px;height:50px;border:4px solid var(--accent);border-top-color:transparent;border-radius:50%;animation:spin .8s infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    @media (max-width:640px){nav{flex-wrap:wrap;gap:12px;justify-content:center;border-radius:40px}.nav-links{gap:16px}.hero h1{font-size:2.4rem}}
-    /* Extra small fixes */
-    .toast.hide{opacity:0;pointer-events:none}
-    .ad-placeholder{background:rgba(100,100,100,.1);padding:12px;border-radius:16px;text-align:center;font-size:.9rem;color:var(--text-light);margin:20px 0}
+    /* ---------- RESET & VARIABLES ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Light & Dark variables - auto / manual controlled by body class */
+    :root {
+      --bg: #f4f7fc;
+      --surface: rgba(255,255,255,0.6);
+      --surface-solid: #ffffff;
+      --text: #1e293b;
+      --text-light: #475569;
+      --border: rgba(0,0,0,0.05);
+      --card-bg: rgba(255,255,255,0.7);
+      --card-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+      --hover-shadow: 0 30px 45px -12px #2563eb80;
+      --accent: #2563eb;
+      --accent-soft: #3b82f6;
+      --badge-featured: #f59e0b;
+      --badge-new: #10b981;
+      --glass-border: 1px solid rgba(255,255,255,0.5);
+      --nav-bg: rgba(255,255,255,0.7);
+      --toast-bg: #1e293b;
+      --toast-text: white;
+    }
+
+    body.dark {
+      --bg: #0b1120;
+      --surface: rgba(15,23,42,0.7);
+      --surface-solid: #1e293b;
+      --text: #e2e8f0;
+      --text-light: #94a3b8;
+      --border: rgba(255,255,255,0.05);
+      --card-bg: rgba(30,41,59,0.7);
+      --card-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+      --hover-shadow: 0 30px 45px -12px #2563eb;
+      --accent: #3b82f6;
+      --accent-soft: #60a5fa;
+      --badge-featured: #fbbf24;
+      --badge-new: #34d399;
+      --glass-border: 1px solid rgba(255,255,255,0.08);
+      --nav-bg: rgba(15,23,42,0.8);
+      --toast-bg: #1e293b;
+      --toast-text: #f1f5f9;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.2s;
+      min-height: 100vh;
+      backdrop-filter: blur(2px);
+    }
+
+    /* ---------- UTILS ---------- */
+    .glass {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: var(--glass-border);
+      border-radius: 28px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 30px;
+      margin: 20px 24px;
+      position: sticky;
+      top: 20px;
+      z-index: 50;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      border-radius: 60px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-img {
+      height: 42px;
+      width: auto;
+      border-radius: 12px;
+    }
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.8rem;
+      background: linear-gradient(145deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0 16px;
+      font-weight: 500;
+    }
+
+    .theme-toggle {
+      background: var(--surface);
+      border: var(--glass-border);
+      border-radius: 40px;
+      padding: 8px 18px;
+      cursor: pointer;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 600;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      text-align: center;
+      margin: 50px 0 30px;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, var(--accent), #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      margin: 16px 0 30px;
+    }
+    .cta-btn {
+      background: linear-gradient(145deg, var(--accent), #1d4ed8);
+      border: none;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      box-shadow: 0 8px 20px var(--accent-soft);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .cta-btn:hover { transform: scale(1.02); }
+
+    /* ---------- AD ZONE 1 (header banner) ---------- */
+    .ad-header {
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 40px;
+      overflow: hidden;
+      background: var(--surface);
+      text-align: center;
+      padding: 10px;
+      color: var(--text-light);
+    }
+
+    /* ---------- SEARCH & FILTER ---------- */
+    .search-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin: 40px 0;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      padding: 8px 24px;
+      border-radius: 60px;
+      max-width: 500px;
+      margin: 0 auto;
+      width: 100%;
+      background: var(--surface);
+    }
+    .search-box i { color: var(--accent); font-size: 1.2rem; }
+    .search-box input {
+      background: transparent;
+      border: none;
+      padding: 14px 12px;
+      width: 100%;
+      color: var(--text);
+      outline: none;
+      font-size: 1rem;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .filter-btn {
+      background: var(--surface);
+      border: var(--glass-border);
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    /* ---------- FEATURED GRID ---------- */
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 40px 0 20px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    /* ---------- SOFTWARE GRID (with ad injection) ---------- */
+    .software-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      margin: 30px 0;
+    }
+
+    /* ---------- CARD ---------- */
+    .software-card, .featured-card {
+      padding: 22px 18px;
+      border-radius: 28px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: var(--glass-border);
+      box-shadow: var(--card-shadow);
+      transition: 0.25s;
+      position: relative;
+    }
+    .software-card:hover, .featured-card:hover {
+      box-shadow: var(--hover-shadow);
+      transform: translateY(-6px);
+    }
+
+    .card-header {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .icon-placeholder {
+      width: 52px; height: 52px;
+      background: var(--surface-solid);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .category-tag {
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 8px 0;
+    }
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin: 8px 0;
+    }
+    .badge-new {
+      position: absolute;
+      top: 12px; left: 20px;
+      background: var(--badge-new);
+      color: black;
+      font-weight: 700;
+      padding: 2px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+    }
+    .badge-featured {
+      position: absolute;
+      top: 12px; right: 20px;
+      background: var(--badge-featured);
+      color: black;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+    }
+    .view-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+      padding: 10px 0;
+      border-radius: 40px;
+      margin-top: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .view-btn:hover { background: var(--accent); color: white; }
+
+    /* ---------- MODAL ---------- */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal-content {
+      max-width: 580px;
+      width: 90%;
+      padding: 30px;
+      border-radius: 40px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: var(--glass-border);
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 24px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--text-light);
+    }
+    .dl-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .dl-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .dl-row button {
+      flex: 2;
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 12px 16px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .copy-link-btn {
+      flex: 0.5;
+      background: var(--surface-solid);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 40px;
+      cursor: pointer;
+    }
+    .copy-link-btn:hover { background: var(--accent); color: white; }
+
+    /* ---------- AD INSIDE MODAL ---------- */
+    .ad-modal {
+      margin: 20px 0 10px;
+      padding: 12px;
+      background: var(--surface);
+      border-radius: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- TOAST ---------- */
+    .toast {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      background: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 14px 28px;
+      border-radius: 60px;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 300;
+      transition: 0.25s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .toast.hide { opacity: 0; visibility: hidden; bottom: 20px; }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      margin-top: 60px;
+      background: var(--surface);
+      border-radius: 50px 50px 0 0;
+      padding: 40px 20px 20px;
+      text-align: center;
+      border: var(--glass-border);
+    }
+    .social-icons {
+      display: flex; gap: 24px; justify-content: center; margin: 20px 0;
+    }
+    .social-icons a { color: var(--text); font-size: 1.8rem; transition: 0.2s; }
+    .social-icons a:hover { color: var(--accent); }
+
+    /* ---------- LOADER ---------- */
+    .loader-wrapper {
+      position: fixed; inset: 0; background: var(--bg); z-index: 999;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.5s;
+    }
+    .loader { width: 50px; height: 50px; border: 4px solid var(--accent); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* responsive */
+    @media (max-width: 640px) {
+      nav { flex-direction: column; gap: 12px; }
+      .hero h1 { font-size: 2.4rem; }
+    }
   </style>
 </head>
 <body>
+  <!-- loader -->
+  <div class="loader-wrapper" id="loader"><div class="loader"></div></div>
 
-<div class="loader-wrapper" id="loader"><div class="loader"></div></div>
+  <!-- toast -->
+  <div class="toast hide" id="toast"><i class="fa-regular fa-circle-check"></i> <span id="toastMsg">Copied</span></div>
 
-<div class="toast hide" id="toast"><i class="fa-regular fa-circle-check"></i> <span id="toastMsg">Link copied</span></div>
-
-<nav class="glass-card">
-  <span class="logo"><i class="fa-regular fa-compass"></i> SoftGrid</span>
-  <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Tools</a>
-    <a href="#">Contact</a>
-  </div>
-  <div class="theme-toggle" id="themeToggle"><i class="fa-regular fa-sun"></i><i class="fa-regular fa-moon"></i> <span>Dark</span></div>
-</nav>
-
-<main class="container">
-  <section class="hero">
-    <h1>Download premium tools<br>with one click</h1>
-    <p>Secure, fast & always updated – curated for devs & power users</p>
-    <button class="cta-btn" id="scrollBtn"><i class="fa-regular fa-circle-down"></i> Browse Software</button>
-  </section>
-
-  <!-- Ad placeholder – top banner -->
-  <div class="ad-placeholder" id="ad-top"> [ Adsterra / Your Banner Ad Here ] </div>
-
-  <div class="search-section">
-    <div class="search-box glass-card">
-      <i class="fa-regular fa-magnifying-glass"></i>
-      <input type="text" id="searchInput" placeholder="Search tools..."/>
+  <!-- main nav -->
+  <nav class="glass">
+    <div class="logo-area">
+      <!-- ===== EASY EDIT: LOGO ===== -->
+      <!-- option 1: image logo (replace src) -->
+      <!-- <img class="logo-img" src="https://via.placeholder.com/42x42/2563eb/white?text=S" alt="logo"> -->
+      <!-- option 2: text logo (default) -->
+      <span class="logo-text">SoftHaven</span>
     </div>
-    <div class="filter-group" id="filterGroup">
-      <button class="filter-btn active" data-cat="all">All</button>
-      <button class="filter-btn" data-cat="Utility">Utility</button>
-      <button class="filter-btn" data-cat="Security">Security</button>
-      <button class="filter-btn" data-cat="Android">Android</button>
-      <button class="filter-btn" data-cat="Windows">Windows</button>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Tools</a>
+      <a href="#">Contact</a>
     </div>
-  </div>
+    <div class="theme-toggle" id="themeToggle">
+      <i class="fa-regular fa-sun"></i><i class="fa-regular fa-moon"></i> <span>Theme</span>
+    </div>
+  </nav>
 
-  <h2 class="section-title"><i class="fa-regular fa-star" style="color:var(--badge-featured)"></i> Featured Picks</h2>
-  <div class="featured-grid" id="featuredContainer"></div>
+  <main class="container">
+    <!-- hero -->
+    <section class="hero">
+      <h1>Download premium tools easily</h1>
+      <p>Fast, secure & always updated. Support us by visiting sponsors.</p>
+      <button class="cta-btn" id="scrollBtn"><i class="fa-regular fa-arrow-down"></i> browse software</button>
+    </section>
 
-  <!-- Ad placeholder – mid page -->
-  <div class="ad-placeholder" id="ad-mid"> [ Horizontal Banner / Native Ad Here ] </div>
+    <!-- ===== AD ZONE 1 : HEADER BANNER ===== -->
+    <div class="ad-header" id="adHeader">
+      <!-- Adsterra or other banner script will be inserted here later -->
+      <p style="opacity:0.7;">[ Header Banner Ad ] — replace with your ad code</p>
+    </div>
 
-  <h2 class="section-title"><i class="fa-regular fa-grid-2"></i> All Tools</h2>
-  <div class="software-grid" id="softwareContainer"></div>
-</main>
-
-<footer>
-  <p><i class="fa-regular fa-copyright"></i> 2026 SoftGrid — Premium Software Hub</p>
-  <div class="social-icons">
-    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-    <a href="#"><i class="fa-brands fa-telegram"></i></a>
-    <a href="#"><i class="fa-brands fa-facebook"></i></a>
-  </div>
-  <p class="copy-notice">contact@softgrid.hub · <i class="fa-regular fa-pen-field"></i> Request a tool</p>
-  <!-- Ad placeholder – footer -->
-  <div class="ad-placeholder" style="margin-top:24px">[ Footer Ad / Popunder Script Placeholder ]</div>
-</footer>
-
-<div class="modal" id="detailModal">
-  <div class="modal-content">
-    <span class="close-modal" id="closeModal">×</span>
-    <div id="modalBody"></div>
-  </div>
-</div>
-
-<!-- ──────────────────────────────────────────────
-     Firebase SDK (modular – only what we need)
-──────────────────────────────────────────────── -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getFirestore, collection, getDocs, doc, updateDoc, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBB7VIciZuWEZkxW3pTgkskYqDtR60pE5I",
-    authDomain: "mysoftbd-82516.firebaseapp.com",
-    projectId: "mysoftbd-82516",
-    storageBucket: "mysoftbd-82516.firebasestorage.app",
-    messagingSenderId: "56119108927",
-    appId: "1:56119108927:web:f5860cf03f5659cf7bdf8a",
-    measurementId: "G-64JR2PXYRW"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  // ── Global state ────────────────────────────────────────
-  let softwareData = [];
-  let currentSoftware = null;
-  const downloadCounts = JSON.parse(localStorage.getItem('softDownloadCounts') || '{}');
-  const toast = document.getElementById('toast');
-  const toastMsg = document.getElementById('toastMsg');
-  const modal = document.getElementById('detailModal');
-  const modalBody = document.getElementById('modalBody');
-  const featuredContainer = document.getElementById('featuredContainer');
-  const softwareContainer = document.getElementById('softwareContainer');
-  const searchInput = document.getElementById('searchInput');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const themeToggle = document.getElementById('themeToggle');
-  let activeCategory = 'all';
-  let searchTerm = '';
-
-  // ── Helpers ─────────────────────────────────────────────
-  function showToast(text, icon = 'fa-regular fa-circle-check') {
-    toastMsg.innerHTML = `<i class="${icon}"></i> ${text}`;
-    toast.classList.remove('hide');
-    setTimeout(() => toast.classList.add('hide'), 3000);
-  }
-
-  function getRedirectCountKey(name) { return `redirectCount_${name}`; }
-
-  function canDirectDownload(name) {
-    const key = getRedirectCountKey(name);
-    const data = JSON.parse(localStorage.getItem(key) || '{}');
-    const now = Date.now();
-    if (data.timestamp && now - data.timestamp > 24*60*60*1000) {
-      localStorage.removeItem(key); // reset after 24h
-      return true;
-    }
-    return (data.count || 0) >= 2; // change to your desired threshold
-  }
-
-  function incrementRedirectCount(name) {
-    const key = getRedirectCountKey(name);
-    const data = JSON.parse(localStorage.getItem(key) || '{}');
-    data.count = (data.count || 0) + 1;
-    data.timestamp = Date.now();
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-
-  // ── Render logic (same as original + Firestore) ────────
-  function filterSoftware() {
-    return softwareData.filter(item => {
-      const matchesSearch = item.name?.toLowerCase().includes(searchTerm) ||
-                            item.description?.toLowerCase().includes(searchTerm);
-      const matchesCat = activeCategory === 'all' || item.category === activeCategory;
-      return matchesSearch && matchesCat;
-    });
-  }
-
-  function createCardHTML(sw, isFeatured = false) {
-    const count = sw.downloads || 0;
-    const featuredBadge = isFeatured ? '<span class="featured-badge">FEATURED</span>' : '';
-    const newBadge = sw.new ? '<span class="new-badge">NEW</span>' : '';
-    return `
-      <div class="software-card glass-card" data-name="${sw.name}">
-        ${newBadge}${featuredBadge}
-        <div class="card-header">
-          <div class="icon-placeholder"><i class="fa-solid ${sw.image || 'fa-cube'}"></i></div>
-          <h3>${sw.name}</h3>
-        </div>
-        <p style="color:var(--text-light);margin-bottom:6px;">${sw.description||''}</p>
-        <span class="category-tag">${sw.category||'Other'}</span>
-        <div class="meta-row">
-          <span><i class="fa-regular fa-code-branch"></i> v${sw.version||'1.0'}</span>
-          <span><i class="fa-regular fa-hard-drive"></i> ${sw.size||'—'}</span>
-        </div>
-        <div class="meta-row download-count-small">
-          <span><i class="fa-regular fa-arrow-down-to-line"></i> ${count} dl</span>
-        </div>
-        <button class="view-btn" data-software='${JSON.stringify(sw).replace(/'/g,"&apos;")}'>View details</button>
+    <!-- search & filter -->
+    <div class="search-section">
+      <div class="search-box glass">
+        <i class="fa-regular fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search tools...">
       </div>
-    `;
-  }
+      <div class="filter-group" id="filterGroup">
+        <button class="filter-btn active" data-cat="all">All</button>
+        <button class="filter-btn" data-cat="Utility">Utility</button>
+        <button class="filter-btn" data-cat="Security">Security</button>
+        <button class="filter-btn" data-cat="Android">Android</button>
+        <button class="filter-btn" data-cat="Windows">Windows</button>
+      </div>
+    </div>
 
-  function renderFeatured(filtered) {
-    const items = filtered.filter(s => s.featured);
-    featuredContainer.innerHTML = items.map(s => createCardHTML(s, true)).join('');
-  }
+    <!-- featured tools -->
+    <h2 class="section-title"><i class="fa-regular fa-star" style="color:var(--badge-featured);"></i> featured</h2>
+    <div class="featured-grid" id="featuredContainer"></div>
 
-  function renderAllSoftware(filtered) {
-    softwareContainer.innerHTML = filtered.map(s => createCardHTML(s)).join('');
-  }
+    <!-- all tools grid + ad injection -->
+    <h2 class="section-title"><i class="fa-regular fa-grid-2"></i> all tools</h2>
+    <div class="software-grid" id="softwareContainer"></div>
 
-  function renderAll() {
-    const filtered = filterSoftware();
-    renderFeatured(filtered);
-    renderAllSoftware(filtered);
-    attachViewListeners();
-  }
+    <!-- request software button (extra) -->
+    <div style="text-align:center; margin: 20px 0 40px;">
+      <button class="filter-btn" id="requestBtn"><i class="fa-regular fa-message"></i> Request a tool</button>
+    </div>
+  </main>
 
-  function attachViewListeners() {
-    document.querySelectorAll('.view-btn').forEach(btn => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        try {
-          const sw = JSON.parse(btn.getAttribute('data-software'));
-          currentSoftware = sw;
-          openModal(sw);
-        } catch {}
+  <!-- footer -->
+  <footer>
+    <!-- ===== AD ZONE 4 : FOOTER AD ===== -->
+    <div id="adFooter" style="margin-bottom: 30px; padding:10px; background: var(--surface); border-radius: 40px;">
+      <p style="opacity:0.7;">[ Footer Ad ] — replace with your ad code</p>
+    </div>
+
+    <div class="social-icons">
+      <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="#"><i class="fa-brands fa-telegram"></i></a>
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+    </div>
+    <p class="copy-notice">© 2026 SoftHaven — edit name in settings</p>
+    <p style="font-size:0.8rem;">contact@softhaven.local · <i class="fa-regular fa-pen-field"></i> request</p>
+  </footer>
+
+  <!-- modal structure -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <div id="modalBody"></div>
+      <!-- ===== AD ZONE 3 : INSIDE MODAL ===== -->
+      <div class="ad-modal" id="adModal">
+        <p style="opacity:0.6;">[ Modal Ad ] — replace with your ad code</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- BEGIN EASY EDIT SECTION ----------
+      // All settings in one place
+
+      // WEBSITE NAME (used in footer and logo if text)
+      const SITE_NAME = "SoftHaven";
+
+      // LOGO: choose type 'text' or 'image'. If image, provide URL.
+      const LOGO_TYPE = 'text'; // 'text' or 'image'
+      const LOGO_IMAGE_URL = 'https://via.placeholder.com/42x42/2563eb/white?text=S'; // used if LOGO_TYPE='image'
+
+      // THEME: 'dark', 'light', or 'auto' (follows system)
+      const DEFAULT_THEME = 'auto';
+
+      // AD REDIRECT SETTINGS
+      const AD_REDIRECT_LINK = 'https://example.com/adpage'; // replace with your ad link
+      const REDIRECT_CLICKS = 2;        // number of times user must go through ad before direct download (per software, reset after 24h)
+      const RESET_HOURS = 24;            // hours until counter resets
+
+      // AD SECTIONS: enable/disable any ad zone (true/false)
+      const ADS_ENABLED = {
+        header: true,
+        betweenCards: true,   // injects an ad after every 4 cards
+        modal: true,
+        footer: true
       };
-    });
-  }
 
-  async function openModal(sw) {
-    const links = sw.links || {};
-    modalBody.innerHTML = `
-      <div style="display:flex;gap:20px;align-items:center;margin-bottom:16px;">
-        <div class="icon-placeholder" style="width:70px;height:70px;font-size:2.5rem;">
-          <i class="fa-solid ${sw.image || 'fa-cube'}"></i>
-        </div>
-        <div>
-          <h2 style="font-size:2rem;">${sw.name}</h2>
-          <span class="category-tag">${sw.category||'Other'}</span>
-        </div>
-      </div>
-      <p style="margin:15px 0;"><strong>${sw.description||''}</strong></p>
-      <p><i class="fa-regular fa-code-branch"></i> v${sw.version||'1.0'} · <i class="fa-regular fa-hard-drive"></i> ${sw.size||'—'}</p>
-      <div class="dl-options">
-        <div class="dl-row">
-          <button class="download-link" data-provider="drive" data-link="${links.drive||'#'}" data-name="${sw.name}">
-            <i class="fa-brands fa-google-drive"></i> Google Drive
-          </button>
-          <button class="copy-link-btn" data-copy="${links.drive||''}"><i class="fa-regular fa-copy"></i></button>
-        </div>
-        <div class="dl-row">
-          <button class="download-link" data-provider="mediafire" data-link="${links.mediafire||'#'}" data-name="${sw.name}">
-            <i class="fa-solid fa-fire"></i> MediaFire
-          </button>
-          <button class="copy-link-btn" data-copy="${links.mediafire||''}"><i class="fa-regular fa-copy"></i></button>
-        </div>
-        <div class="dl-row">
-          <button class="download-link" data-provider="mega" data-link="${links.mega||'#'}" data-name="${sw.name}">
-            <i class="fa-brands fa-m"></i> Mega
-          </button>
-          <button class="copy-link-btn" data-copy="${links.mega||''}"><i class="fa-regular fa-copy"></i></button>
-        </div>
-      </div>
-      <p style="text-align:center;color:var(--text-light);margin-top:16px;">
-        <i class="fa-regular fa-circle-info"></i> Click any download – first few may show sponsor
-      </p>
-    `;
-    modal.style.display = 'flex';
+      // RAW AD SCRIPTS (paste your Adsterra or other codes here)
+      // They will be inserted into respective zones if enabled.
+      const AD_SCRIPT_HEADER = `<!-- Adsterra banner code example -->
+<div style="background:#ccc; padding:10px;">[Header Ad Code]</div>`;
+      const AD_SCRIPT_BETWEEN = `<!-- native ad between cards -->
+<div style="background:#ddd; padding:15px; border-radius:40px;">[Between Cards Ad]</div>`;
+      const AD_SCRIPT_MODAL = `<!-- modal ad code -->
+<div style="background:#bbb; padding:10px;">[Modal Ad]</div>`;
+      const AD_SCRIPT_FOOTER = `<!-- footer ad -->
+<div style="background:#aaa; padding:15px;">[Footer Ad]</div>`;
 
-    // Download buttons logic with smart redirect
-    modalBody.querySelectorAll('.download-link').forEach(btn => {
-      btn.onclick = async (e) => {
-        e.preventDefault();
-        const link = btn.dataset.link;
-        const name = btn.dataset.name;
-        const provider = btn.dataset.provider;
+      // ---------- SOFTWARE LIST (add / edit objects here) ----------
+      const SOFTWARE_LIST = [
+        {
+          name: "TurboCleaner",
+          version: "2.4",
+          size: "14 MB",
+          category: "Utility",
+          description: "Deep system junk removal & privacy cleaner.",
+          image: "fa-broom",       // Font Awesome class (free)
+          featured: true,
+          new: false,
+          links: { drive: "https://drive.google.com/example1", mediafire: "https://mediafire.com/example1", mega: "https://mega.nz/example1" }
+        },
+        {
+          name: "CipherLock",
+          version: "1.8",
+          size: "8 MB",
+          category: "Security",
+          description: "AES-256 file vault with cloud backup.",
+          image: "fa-lock",
+          featured: true,
+          new: true,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "ADB ToolKit",
+          version: "3.0",
+          size: "22 MB",
+          category: "Android",
+          description: "Unlock, flash, and manage android devices.",
+          image: "fa-mobile",
+          featured: false,
+          new: true,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "WinTweak Pro",
+          version: "5.2",
+          size: "11 MB",
+          category: "Windows",
+          description: "Optimize windows registry and startup.",
+          image: "fa-windows",
+          featured: true,
+          new: false,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "NetShield",
+          version: "0.9",
+          size: "5 MB",
+          category: "Security",
+          description: "Firewall manager with real-time monitor.",
+          image: "fa-shield",
+          featured: false,
+          new: true,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "PDF Forge",
+          version: "7.1",
+          size: "42 MB",
+          category: "Utility",
+          description: "Edit, split, convert PDFs easily.",
+          image: "fa-file-pdf",
+          featured: false,
+          new: false,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "DroidFlash",
+          version: "2.2",
+          size: "18 MB",
+          category: "Android",
+          description: "Fastboot & Odin alternative.",
+          image: "fa-bolt",
+          featured: false,
+          new: false,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        },
+        {
+          name: "SysMon",
+          version: "1.4",
+          size: "7 MB",
+          category: "Windows",
+          description: "Hardware monitor + overlay.",
+          image: "fa-microchip",
+          featured: false,
+          new: false,
+          links: { drive: "#", mediafire: "#", mega: "#" }
+        }
+      ];
 
-        if (!link || link === '#') {
-          showToast('No link available yet', 'fa-exclamation-triangle');
-          return;
+      // ---------- END EASY EDIT SECTION ----------
+
+      // ---------- GLOBAL VARS & INIT ----------
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const modal = document.getElementById('detailModal');
+      const modalBody = document.getElementById('modalBody');
+      const featuredContainer = document.getElementById('featuredContainer');
+      const softwareContainer = document.getElementById('softwareContainer');
+      const searchInput = document.getElementById('searchInput');
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const themeToggle = document.getElementById('themeToggle');
+
+      // State
+      let activeCategory = 'all';
+      let searchTerm = '';
+      let currentSoftware = null;
+
+      // Download counter storage (per software) with timestamp
+      let clickStats = JSON.parse(localStorage.getItem('soft_download_stats')) || {};
+
+      // Helper to reset expired counters
+      function cleanExpiredCounters() {
+        const now = Date.now();
+        let changed = false;
+        Object.keys(clickStats).forEach(key => {
+          if (now - clickStats[key].timestamp > RESET_HOURS * 3600000) {
+            delete clickStats[key];
+            changed = true;
+          }
+        });
+        if (changed) localStorage.setItem('soft_download_stats', JSON.stringify(clickStats));
+      }
+      cleanExpiredCounters();
+
+      // ---------- AD INJECTION ----------
+      function renderAdBetween() {
+        if (!ADS_ENABLED.betweenCards) return null;
+        const adDiv = document.createElement('div');
+        adDiv.className = 'software-card glass';
+        adDiv.style.background = 'var(--surface)';
+        adDiv.style.display = 'flex';
+        adDiv.style.alignItems = 'center';
+        adDiv.style.justifyContent = 'center';
+        adDiv.style.minHeight = '200px';
+        adDiv.innerHTML = AD_SCRIPT_BETWEEN || '<p style="opacity:0.7;">[Between cards ad]</p>';
+        return adDiv;
+      }
+
+      // Inject ads into software grid every N cards (e.g., after 4)
+      function injectAdsIntoGrid(cards) {
+        if (!ADS_ENABLED.betweenCards) return cards;
+        const interval = 4; // after every 4 cards
+        const result = [];
+        for (let i = 0; i < cards.length; i++) {
+          result.push(cards[i]);
+          if ((i + 1) % interval === 0 && i !== cards.length - 1) {
+            result.push(renderAdBetween());
+          }
+        }
+        return result;
+      }
+
+      // ---------- RENDER CARDS ----------
+      function filterSoftware() {
+        return SOFTWARE_LIST.filter(item => {
+          const matchSearch = item.name.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm);
+          const matchCat = activeCategory === 'all' || item.category === activeCategory;
+          return matchSearch && matchCat;
+        });
+      }
+
+      function createCardHTML(sw, isFeatured = false) {
+        const newBadge = sw.new ? '<span class="badge-new">NEW</span>' : '';
+        const featuredBadge = sw.featured ? '<span class="badge-featured">FEATURED</span>' : '';
+        return `
+          <div class="${isFeatured ? 'featured-card' : 'software-card'} glass" data-name="${sw.name}">
+            ${newBadge} ${featuredBadge}
+            <div class="card-header">
+              <div class="icon-placeholder"><i class="fa-solid ${sw.image}"></i></div>
+              <h3>${sw.name}</h3>
+            </div>
+            <p style="color: var(--text-light);">${sw.description}</p>
+            <span class="category-tag">${sw.category}</span>
+            <div class="meta-row">
+              <span><i class="fa-regular fa-code-branch"></i> v${sw.version}</span>
+              <span><i class="fa-regular fa-hard-drive"></i> ${sw.size}</span>
+            </div>
+            <button class="view-btn" data-software='${JSON.stringify(sw).replace(/'/g, "&apos;")}'>View details</button>
+          </div>
+        `;
+      }
+
+      function renderAll() {
+        const filtered = filterSoftware();
+        const featured = filtered.filter(s => s.featured);
+        featuredContainer.innerHTML = featured.map(s => createCardHTML(s, true)).join('');
+
+        let allCards = filtered.map(s => createCardHTML(s, false));
+        allCards = injectAdsIntoGrid(allCards);
+        softwareContainer.innerHTML = allCards.map(el => el instanceof HTMLElement ? el.outerHTML : el).join('');
+
+        attachViewListeners();
+      }
+
+      function attachViewListeners() {
+        document.querySelectorAll('.view-btn').forEach(btn => {
+          btn.removeEventListener('click', viewHandler);
+          btn.addEventListener('click', viewHandler);
+        });
+      }
+
+      function viewHandler(e) {
+        const swStr = e.target.getAttribute('data-software');
+        try { currentSoftware = JSON.parse(swStr); openModal(currentSoftware); } catch (err) { }
+      }
+
+      // ---------- SMART DOWNLOAD LOGIC (ad redirect) ----------
+      function handleDownload(softwareName, realLink) {
+        cleanExpiredCounters();
+        const key = softwareName;
+        const now = Date.now();
+        let stat = clickStats[key] || { count: 0, timestamp: now };
+        // if timestamp older than reset, reset count
+        if (now - stat.timestamp > RESET_HOURS * 3600000) {
+          stat = { count: 0, timestamp: now };
         }
 
-        showToast('Preparing download...', 'fa-spinner fa-spin');
-
-        if (canDirectDownload(name)) {
-          window.open(link, '_blank');
-          showToast('Download started!', 'fa-check');
+        if (stat.count < REDIRECT_CLICKS) {
+          // redirect to ad link
+          stat.count += 1;
+          stat.timestamp = now;
+          clickStats[key] = stat;
+          localStorage.setItem('soft_download_stats', JSON.stringify(clickStats));
+          showToast('Redirecting to sponsor...');
+          setTimeout(() => { window.open(AD_REDIRECT_LINK, '_blank'); }, 800);
         } else {
-          // Redirect to ad
-          const adLink = "https://YOUR-REDIRECT-LINK-HERE"; // ← REPLACE THIS
-          window.open(adLink, '_blank');
-          incrementRedirectCount(name);
-          showToast('Please view sponsor first → real link unlocked soon', 'fa-info');
+          // reset counter (optional: keep same, but we don't reset after direct)
+          // we don't increment here, but you may want to reset after direct? we keep as is.
+          showToast('Download starting...');
+          setTimeout(() => { window.open(realLink, '_blank'); }, 500);
         }
+      }
 
-        // Increment real download count in Firestore
-        try {
-          const ref = doc(db, "software", name);
-          await updateDoc(ref, { downloads: sw.downloads + 1 || 1 });
-          sw.downloads = (sw.downloads || 0) + 1;
-          renderAll(); // refresh UI
-        } catch (err) {
-          console.warn("Could not increment download count", err);
+      // ---------- MODAL ----------
+      function openModal(sw) {
+        const links = sw.links;
+        modalBody.innerHTML = `
+          <div style="display:flex; gap:20px; align-items:center; margin-bottom:16px;">
+            <div class="icon-placeholder" style="width:70px;height:70px; font-size:2.5rem;"><i class="fa-solid ${sw.image}"></i></div>
+            <div><h2>${sw.name}</h2><span class="category-tag">${sw.category}</span></div>
+          </div>
+          <p><strong>${sw.description}</strong></p>
+          <p><i class="fa-regular fa-code-branch"></i> v${sw.version}  ·  <i class="fa-regular fa-hard-drive"></i> ${sw.size}</p>
+          <div class="dl-options">
+            <div class="dl-row"><button class="download-btn" data-link="${links.drive}" data-name="${sw.name}"><i class="fa-brands fa-google-drive"></i> Google Drive</button><button class="copy-link-btn" data-copy="${links.drive}"><i class="fa-regular fa-copy"></i></button></div>
+            <div class="dl-row"><button class="download-btn" data-link="${links.mediafire}" data-name="${sw.name}"><i class="fa-brands fa-firefox-browser"></i> MediaFire</button><button class="copy-link-btn" data-copy="${links.mediafire}"><i class="fa-regular fa-copy"></i></button></div>
+            <div class="dl-row"><button class="download-btn" data-link="${links.mega}" data-name="${sw.name}"><i class="fa-brands fa-m"></i> Mega</button><button class="copy-link-btn" data-copy="${links.mega}"><i class="fa-regular fa-copy"></i></button></div>
+          </div>
+        `;
+        modal.style.display = 'flex';
+
+        // attach download events
+        modalBody.querySelectorAll('.download-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const link = btn.getAttribute('data-link');
+            const name = btn.getAttribute('data-name');
+            if (link && link !== '#') handleDownload(name, link);
+            else showToast('Demo link (update in SOFTWARE_LIST)');
+          });
+        });
+        modalBody.querySelectorAll('.copy-link-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const link = btn.getAttribute('data-copy');
+            navigator.clipboard.writeText(link).then(() => showToast('Link copied!'));
+          });
+        });
+      }
+
+      // close modal
+      document.getElementById('closeModal').addEventListener('click', () => modal.style.display = 'none');
+      window.addEventListener('click', e => { if (e.target === modal) modal.style.display = 'none'; });
+
+      // ---------- TOAST ----------
+      function showToast(text) {
+        toastMsg.innerText = text;
+        toast.classList.remove('hide');
+        setTimeout(() => toast.classList.add('hide'), 2500);
+      }
+
+      // ---------- THEME ----------
+      function setTheme(theme) {
+        if (theme === 'dark') document.body.classList.add('dark');
+        else if (theme === 'light') document.body.classList.remove('dark');
+        else if (theme === 'auto') {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.body.classList.add('dark');
+          else document.body.classList.remove('dark');
         }
-      };
-    });
-
-    // Copy buttons
-    modalBody.querySelectorAll('.copy-link-btn').forEach(btn => {
-      btn.onclick = () => {
-        const link = btn.dataset.copy;
-        if (link) {
-          navigator.clipboard.writeText(link).then(() => showToast('Link copied!'));
+      }
+      const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
+      setTheme(savedTheme);
+      themeToggle.addEventListener('click', () => {
+        if (document.body.classList.contains('dark')) {
+          document.body.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.body.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
         }
-      };
-    });
-  }
+      });
 
-  document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
-  window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+      // ---------- FILTER & SEARCH ----------
+      searchInput.addEventListener('input', (e) => { searchTerm = e.target.value.toLowerCase(); renderAll(); });
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeCategory = btn.getAttribute('data-cat');
+          renderAll();
+        });
+      });
 
-  // ── Search & Filter ─────────────────────────────────────
-  searchInput.oninput = e => {
-    searchTerm = e.target.value.toLowerCase().trim();
-    renderAll();
-  };
+      // scroll to tools
+      document.getElementById('scrollBtn').addEventListener('click', () => {
+        document.querySelector('.search-section').scrollIntoView({ behavior: 'smooth' });
+      });
 
-  filterBtns.forEach(btn => {
-    btn.onclick = () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCategory = btn.dataset.cat;
+      // request button (dummy)
+      document.getElementById('requestBtn').addEventListener('click', () => {
+        showToast('Request feature - contact via social');
+      });
+
+      // ---------- INSERT AD SCRIPTS INTO ZONES (if enabled) ----------
+      if (ADS_ENABLED.header) {
+        document.getElementById('adHeader').innerHTML = AD_SCRIPT_HEADER || '<p>Header ad placeholder</p>';
+      } else document.getElementById('adHeader').style.display = 'none';
+
+      if (ADS_ENABLED.modal) {
+        document.getElementById('adModal').innerHTML = AD_SCRIPT_MODAL || '<p>Modal ad placeholder</p>';
+      } else document.getElementById('adModal').style.display = 'none';
+
+      if (ADS_ENABLED.footer) {
+        document.getElementById('adFooter').innerHTML = AD_SCRIPT_FOOTER || '<p>Footer ad placeholder</p>';
+      } else document.getElementById('adFooter').style.display = 'none';
+
+      // ---------- INIT RENDER ----------
       renderAll();
-    };
-  });
 
-  // ── Theme toggle + persist ──────────────────────────────
-  const prefersDark = localStorage.getItem('theme') === 'dark' ||
-    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  if (prefersDark) document.body.classList.add('dark');
-  themeToggle.onclick = () => {
-    document.body.classList.toggle('dark');
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  };
+      // ---------- LOADER ----------
+      window.addEventListener('load', () => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+      });
 
-  document.getElementById('scrollBtn').onclick = () => {
-    document.querySelector('.search-section').scrollIntoView({behavior:'smooth'});
-  };
+      // ---------- UPDATE LOGO ----------
+      if (LOGO_TYPE === 'image') {
+        document.querySelector('.logo-area').innerHTML = `<img class="logo-img" src="${LOGO_IMAGE_URL}" alt="logo">`;
+      } else {
+        document.querySelector('.logo-text').innerText = SITE_NAME;
+      }
 
-  // ── Load software from Firestore ────────────────────────
-  async function loadSoftware() {
-    try {
-      const q = query(collection(db, "software"), orderBy("downloads", "desc"));
-      const snap = await getDocs(q);
-      softwareData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderAll();
-    } catch (err) {
-      console.error("Firestore read error:", err);
-      showToast("Cannot load tools right now", "fa-exclamation-triangle");
-    }
-  }
-
-  // ── Loader ──────────────────────────────────────────────
-  window.onload = () => {
-    document.getElementById('loader').style.opacity = '0';
-    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-    loadSoftware();
-  };
-</script>
+      // update footer name
+      document.querySelector('.copy-notice').innerHTML = `© 2026 ${SITE_NAME} — edit name in settings`;
+    })();
+  </script>
+  <!-- small fix for toast hide class -->
+  <style>.toast.hide { opacity: 0; pointer-events: none; }</style>
 </body>
 </html>
