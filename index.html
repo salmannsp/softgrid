@@ -17,7 +17,6 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Light & Dark variables - auto / manual controlled by body class */
     :root {
       --bg: #f4f7fc;
       --surface: rgba(255,255,255,0.6);
@@ -279,6 +278,13 @@
       font-size: 1.8rem;
       color: var(--accent);
       border: 1px solid var(--border);
+      overflow: hidden; /* for images */
+    }
+    .icon-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 18px;
     }
     .category-tag {
       background: var(--accent);
@@ -358,6 +364,22 @@
       font-size: 2rem;
       cursor: pointer;
       color: var(--text-light);
+    }
+    .modal-icon-large {
+      width: 70px; height: 70px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-solid);
+      font-size: 2.5rem;
+      color: var(--accent);
+    }
+    .modal-icon-large img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .dl-options {
       display: flex;
@@ -585,6 +607,7 @@
 <div style="background:#aaa; padding:15px;">[Footer Ad]</div>`;
 
       // ---------- SOFTWARE LIST (add / edit objects here) ----------
+      // image field can be a Font Awesome class (e.g., "fa-broom") OR a full image URL (e.g., "https://example.com/icon.png")
       const SOFTWARE_LIST = [
         {
           name: "TurboCleaner",
@@ -711,6 +734,11 @@
       }
       cleanExpiredCounters();
 
+      // Helper to detect if image is a URL
+      function isImageUrl(str) {
+        return str.startsWith('http') || /\.(png|jpg|jpeg|gif|svg|webp)(\?.*)?$/i.test(str);
+      }
+
       // ---------- AD INJECTION ----------
       function renderAdBetween() {
         if (!ADS_ENABLED.betweenCards) return null;
@@ -749,13 +777,21 @@
       }
 
       function createCardHTML(sw, isFeatured = false) {
+        const isUrl = isImageUrl(sw.image);
+        const iconHtml = isUrl
+          ? `<img src="${sw.image}" alt="${sw.name}">`
+          : `<i class="fa-solid ${sw.image}"></i>`;
+
         const newBadge = sw.new ? '<span class="badge-new">NEW</span>' : '';
         const featuredBadge = sw.featured ? '<span class="badge-featured">FEATURED</span>' : '';
+
         return `
           <div class="${isFeatured ? 'featured-card' : 'software-card'} glass" data-name="${sw.name}">
             ${newBadge} ${featuredBadge}
             <div class="card-header">
-              <div class="icon-placeholder"><i class="fa-solid ${sw.image}"></i></div>
+              <div class="icon-placeholder">
+                ${iconHtml}
+              </div>
               <h3>${sw.name}</h3>
             </div>
             <p style="color: var(--text-light);">${sw.description}</p>
@@ -813,8 +849,7 @@
           showToast('Redirecting to sponsor...');
           setTimeout(() => { window.open(AD_REDIRECT_LINK, '_blank'); }, 800);
         } else {
-          // reset counter (optional: keep same, but we don't reset after direct)
-          // we don't increment here, but you may want to reset after direct? we keep as is.
+          // direct download
           showToast('Download starting...');
           setTimeout(() => { window.open(realLink, '_blank'); }, 500);
         }
@@ -823,9 +858,16 @@
       // ---------- MODAL ----------
       function openModal(sw) {
         const links = sw.links;
+        const isUrl = isImageUrl(sw.image);
+        const iconHtml = isUrl
+          ? `<img src="${sw.image}" alt="${sw.name}">`
+          : `<i class="fa-solid ${sw.image}"></i>`;
+
         modalBody.innerHTML = `
           <div style="display:flex; gap:20px; align-items:center; margin-bottom:16px;">
-            <div class="icon-placeholder" style="width:70px;height:70px; font-size:2.5rem;"><i class="fa-solid ${sw.image}"></i></div>
+            <div class="modal-icon-large">
+              ${iconHtml}
+            </div>
             <div><h2>${sw.name}</h2><span class="category-tag">${sw.category}</span></div>
           </div>
           <p><strong>${sw.description}</strong></p>
